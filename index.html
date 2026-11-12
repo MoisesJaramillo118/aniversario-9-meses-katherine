@@ -718,6 +718,91 @@ canvas#conf {
   z-index: 1;
   pointer-events: none;
 }
+
+/* ============ PERSONAJES EN MOVIMIENTO (SNOOPY, BURBUJA Y MONITO) ============ */
+@keyframes mascotBounce {
+  0%, 100% { transform: translateY(0) rotate(-3deg) scale(1); }
+  50% { transform: translateY(-9px) rotate(4deg) scale(1.06); }
+}
+
+@keyframes burbujaFly {
+  0%, 100% { transform: translateY(0) translateX(0) rotate(-5deg); }
+  50% { transform: translateY(-12px) translateX(6px) rotate(6deg); }
+}
+
+@keyframes monitoSwing {
+  0%, 100% { transform: rotate(-8deg) translateY(0); }
+  50% { transform: rotate(8deg) translateY(-7px); }
+}
+
+@keyframes heartBeat {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.22); }
+}
+
+@keyframes earWag {
+  0%, 100% { transform: rotate(12deg); }
+  50% { transform: rotate(25deg); }
+}
+
+.anim-snoopy {
+  animation: mascotBounce 2.6s ease-in-out infinite;
+  filter: drop-shadow(0 6px 12px rgba(92, 16, 35, 0.22));
+  cursor: pointer;
+}
+
+.anim-burbuja {
+  animation: burbujaFly 2.8s ease-in-out infinite;
+  filter: drop-shadow(0 6px 14px rgba(57, 181, 255, 0.35));
+  cursor: pointer;
+}
+
+.anim-monito {
+  animation: monitoSwing 2.4s ease-in-out infinite;
+  filter: drop-shadow(0 6px 12px rgba(120, 60, 20, 0.25));
+  cursor: pointer;
+}
+
+/* Mascotas flotantes en las esquinas de cada diapositiva */
+.slide-mascot-badge {
+  position: absolute;
+  z-index: 12;
+  width: 58px;
+  height: 58px;
+  pointer-events: auto;
+  user-select: none;
+  transition: transform 0.2s ease;
+}
+.slide-mascot-badge:active {
+  transform: scale(1.3) !important;
+}
+.slide-mascot-badge.pos-tl { top: 54px; left: 10px; }
+.slide-mascot-badge.pos-tr { top: 54px; right: 10px; }
+.slide-mascot-badge.pos-bl { bottom: 68px; left: 10px; }
+.slide-mascot-badge.pos-br { bottom: 68px; right: 10px; }
+
+/* Fila de los 3 personajes bailando juntos en cada slide */
+.trio-mascots-bar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: rgba(255, 255, 255, 0.78);
+  backdrop-filter: blur(8px);
+  border: 1.5px solid rgba(230, 57, 122, 0.28);
+  padding: 4px 12px;
+  border-radius: 999px;
+  margin-top: 8px;
+  box-shadow: 0 6px 18px rgba(92, 16, 35, 0.12);
+}
+.slide.dark .trio-mascots-bar, .slide.temple-theme .trio-mascots-bar {
+  background: rgba(255, 255, 255, 0.14);
+  border-color: rgba(255, 194, 212, 0.35);
+}
+.trio-mascots-bar svg {
+  width: 34px;
+  height: 34px;
+}
 </style>
 </head>
 <body>
@@ -773,10 +858,10 @@ canvas#conf {
         <strong>Katherine &amp; Moisés</strong> — 9 meses de un amor sempiterno que nació para durar por toda la eternidad.
       </p>
 
-      <!-- Banner de Snoopy & Burbuja (Chicas Superpoderosas) interactivo -->
+      <!-- Banner de Snoopy, Burbuja y Monito en movimiento -->
       <div class="rv character-banner">
-        <!-- Snoopy SVG -->
-        <svg class="snoopy-svg" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- Snoopy SVG animado -->
+        <svg class="snoopy-svg anim-snoopy" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
           <circle cx="50" cy="50" r="46" fill="#fff0f5" stroke="#ff9ebb" stroke-width="3"/>
           <ellipse cx="48" cy="46" rx="22" ry="17" fill="#ffffff" stroke="#240710" stroke-width="3"/>
           <ellipse cx="64" cy="48" rx="12" ry="9" fill="#ffffff" stroke="#240710" stroke-width="3"/>
@@ -787,22 +872,17 @@ canvas#conf {
           <path d="M39 66 L36 84 L58 84 L55 66 Z" fill="#ffffff" stroke="#240710" stroke-width="3"/>
           <path d="M75 24 C75 20 81 20 81 24 C81 20 87 20 87 24 C87 29 81 33 81 33 C81 33 75 29 75 24 Z" fill="#e6397a"/>
         </svg>
-        <!-- Burbuja (Las Chicas Superpoderosas) SVG -->
-        <svg class="snoopy-svg" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- Burbuja SVG animada -->
+        <svg class="snoopy-svg anim-burbuja" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
           <circle cx="50" cy="50" r="46" fill="#e3f6ff" stroke="#6ec6ff" stroke-width="3"/>
-          <!-- Coletas rubias de Burbuja -->
           <ellipse cx="18" cy="44" rx="11" ry="8" transform="rotate(-20 18 44)" fill="#ffd84d" stroke="#240710" stroke-width="2.8"/>
           <ellipse cx="82" cy="44" rx="11" ry="8" transform="rotate(20 82 44)" fill="#ffd84d" stroke="#240710" stroke-width="2.8"/>
-          <!-- Ligas celestes -->
           <circle cx="27" cy="44" r="3.5" fill="#4fc3f7" stroke="#240710" stroke-width="2"/>
           <circle cx="73" cy="44" r="3.5" fill="#4fc3f7" stroke="#240710" stroke-width="2"/>
-          <!-- Vestido celeste con franja negra -->
           <path d="M38 66 L33 85 L67 85 L62 66 Z" fill="#4fc3f7" stroke="#240710" stroke-width="2.8"/>
           <rect x="35" y="73" width="30" height="5" fill="#240710"/>
-          <!-- Cabeza y cabello rubio -->
           <circle cx="50" cy="48" r="22" fill="#ffe4d6" stroke="#240710" stroke-width="2.8"/>
           <path d="M29 43 C31 27 69 27 71 43 C63 36 55 41 50 34 C45 41 37 36 29 43 Z" fill="#ffd84d" stroke="#240710" stroke-width="2.6"/>
-          <!-- Ojos gigantes celestes de Burbuja -->
           <circle cx="41" cy="50" r="8.5" fill="#ffffff" stroke="#240710" stroke-width="2.4"/>
           <circle cx="59" cy="50" r="8.5" fill="#ffffff" stroke="#240710" stroke-width="2.4"/>
           <circle cx="42" cy="50" r="5.8" fill="#39b5ff"/>
@@ -811,12 +891,33 @@ canvas#conf {
           <circle cx="58" cy="50" r="3.2" fill="#111111"/>
           <circle cx="40" cy="48" r="2" fill="#ffffff"/>
           <circle cx="56" cy="48" r="2" fill="#ffffff"/>
-          <!-- Sonrisa tierna -->
           <path d="M47 61 Q50 64 53 61" stroke="#240710" stroke-width="2.3" stroke-linecap="round" fill="none"/>
         </svg>
-        <div style="font-size:12.5px;line-height:1.4">
-          <strong style="color:var(--blush);display:block">✨ Con Snoopy, Burbuja y Monitos:</strong>
-          Toca las <strong>burbujas 🫧</strong> que flotan por la pantalla para reventarlas y descubrir lo que significas para mí.
+        <!-- Monito SVG animado -->
+        <svg class="snoopy-svg anim-monito" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="50" cy="50" r="46" fill="#fff5e6" stroke="#f4b183" stroke-width="3"/>
+          <circle cx="23" cy="48" r="10" fill="#8d5524" stroke="#240710" stroke-width="2.6"/>
+          <circle cx="23" cy="48" r="5.5" fill="#ffcba4"/>
+          <circle cx="77" cy="48" r="10" fill="#8d5524" stroke="#240710" stroke-width="2.6"/>
+          <circle cx="77" cy="48" r="5.5" fill="#ffcba4"/>
+          <ellipse cx="50" cy="76" rx="15" ry="12" fill="#8d5524" stroke="#240710" stroke-width="2.6"/>
+          <circle cx="50" cy="48" r="22" fill="#8d5524" stroke="#240710" stroke-width="2.6"/>
+          <circle cx="43" cy="44" r="9" fill="#ffcba4"/>
+          <circle cx="57" cy="44" r="9" fill="#ffcba4"/>
+          <ellipse cx="50" cy="55" rx="15" ry="10.5" fill="#ffcba4"/>
+          <circle cx="42" cy="45" r="3.6" fill="#240710"/>
+          <circle cx="58" cy="45" r="3.6" fill="#240710"/>
+          <circle cx="41" cy="43.8" r="1.3" fill="#ffffff"/>
+          <circle cx="57" cy="43.8" r="1.3" fill="#ffffff"/>
+          <ellipse cx="35" cy="53" rx="3.8" ry="2.2" fill="#ff7aa8" opacity="0.75"/>
+          <ellipse cx="65" cy="53" rx="3.8" ry="2.2" fill="#ff7aa8" opacity="0.75"/>
+          <ellipse cx="50" cy="51" rx="2.6" ry="1.8" fill="#4a2511"/>
+          <path d="M44 56 Q50 62 56 56" stroke="#240710" stroke-width="2.4" stroke-linecap="round" fill="none"/>
+          <path d="M43 72 C43 68 50 68 50 72 C50 68 57 68 57 72 C57 78 50 83 50 83 C50 83 43 78 43 72 Z" fill="#e6397a" stroke="#ffffff" stroke-width="1.2"/>
+        </svg>
+        <div style="font-size:12px;line-height:1.38">
+          <strong style="color:var(--blush);display:block">✨ Snoopy, Burbuja y Monito:</strong>
+          Tócalos o revienta las <strong>burbujas 🫧</strong> para ver mensajes secretos.
         </div>
       </div>
 
@@ -1097,7 +1198,18 @@ canvas#conf {
 
       <div class="rv cards" style="margin-top:12px">
         <div class="mcard" onclick="launchBubbleBurst()">
-          <div class="ico" style="background:#eef7ff">🐶</div>
+          <div class="ico" style="background:#fff0f5;padding:4px">
+            <svg class="anim-snoopy" viewBox="0 0 100 100" width="38" height="38" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <ellipse cx="48" cy="46" rx="22" ry="17" fill="#ffffff" stroke="#240710" stroke-width="3"/>
+              <ellipse cx="64" cy="48" rx="12" ry="9" fill="#ffffff" stroke="#240710" stroke-width="3"/>
+              <ellipse cx="33" cy="52" rx="8" ry="15" transform="rotate(12 33 52)" fill="#240710"/>
+              <circle cx="75" cy="47" r="4.5" fill="#240710"/>
+              <path d="M48 41 Q52 37 55 41" stroke="#240710" stroke-width="2.8" stroke-linecap="round" fill="none"/>
+              <rect x="38" y="61" width="18" height="5" rx="2.5" fill="#e6397a" stroke="#240710" stroke-width="2"/>
+              <path d="M39 66 L36 84 L58 84 L55 66 Z" fill="#ffffff" stroke="#240710" stroke-width="3"/>
+              <path d="M75 24 C75 20 81 20 81 24 C81 20 87 20 87 24 C87 29 81 33 81 33 C81 33 75 29 75 24 Z" fill="#e6397a"/>
+            </svg>
+          </div>
           <div>
             <h3>Snoopy &amp; nuestro amor fiel</h3>
             <p>Tierno, leal y siempre soñando despierto contigo, la chica de mis sueños.</p>
@@ -1106,7 +1218,7 @@ canvas#conf {
 
         <div class="mcard" onclick="launchBubbleBurst()">
           <div class="ico" style="background:#e8f8ff;padding:4px">
-            <svg viewBox="0 0 100 100" width="38" height="38" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <svg class="anim-burbuja" viewBox="0 0 100 100" width="38" height="38" fill="none" xmlns="http://www.w3.org/2000/svg">
               <ellipse cx="18" cy="44" rx="11" ry="8" transform="rotate(-20 18 44)" fill="#ffd84d" stroke="#240710" stroke-width="3"/>
               <ellipse cx="82" cy="44" rx="11" ry="8" transform="rotate(20 82 44)" fill="#ffd84d" stroke="#240710" stroke-width="3"/>
               <path d="M38 66 L33 86 L67 86 L62 66 Z" fill="#4fc3f7" stroke="#240710" stroke-width="3"/>
@@ -1124,13 +1236,34 @@ canvas#conf {
             </svg>
           </div>
           <div>
-            <h3>Burbuja (Las Chicas Superpoderosas) 💙</h3>
+            <h3>Burbuja 💙</h3>
             <p>Dulce, tierna, alegre y con el corazón más grande y noble, exactamente igual que tú, mi niña hermosa.</p>
           </div>
         </div>
 
         <div class="mcard" onclick="launchBubbleBurst()">
-          <div class="ico" style="background:#fff3e6">🐵</div>
+          <div class="ico" style="background:#fff3e6;padding:4px">
+            <svg class="anim-monito" viewBox="0 0 100 100" width="38" height="38" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="23" cy="48" r="10" fill="#8d5524" stroke="#240710" stroke-width="2.6"/>
+              <circle cx="23" cy="48" r="5.5" fill="#ffcba4"/>
+              <circle cx="77" cy="48" r="10" fill="#8d5524" stroke="#240710" stroke-width="2.6"/>
+              <circle cx="77" cy="48" r="5.5" fill="#ffcba4"/>
+              <ellipse cx="50" cy="76" rx="15" ry="12" fill="#8d5524" stroke="#240710" stroke-width="2.6"/>
+              <circle cx="50" cy="48" r="22" fill="#8d5524" stroke="#240710" stroke-width="2.6"/>
+              <circle cx="43" cy="44" r="9" fill="#ffcba4"/>
+              <circle cx="57" cy="44" r="9" fill="#ffcba4"/>
+              <ellipse cx="50" cy="55" rx="15" ry="10.5" fill="#ffcba4"/>
+              <circle cx="42" cy="45" r="3.6" fill="#240710"/>
+              <circle cx="58" cy="45" r="3.6" fill="#240710"/>
+              <circle cx="41" cy="43.8" r="1.3" fill="#ffffff"/>
+              <circle cx="57" cy="43.8" r="1.3" fill="#ffffff"/>
+              <ellipse cx="35" cy="53" rx="3.8" ry="2.2" fill="#ff7aa8" opacity="0.75"/>
+              <ellipse cx="65" cy="53" rx="3.8" ry="2.2" fill="#ff7aa8" opacity="0.75"/>
+              <ellipse cx="50" cy="51" rx="2.6" ry="1.8" fill="#4a2511"/>
+              <path d="M44 56 Q50 62 56 56" stroke="#240710" stroke-width="2.4" stroke-linecap="round" fill="none"/>
+              <path d="M43 72 C43 68 50 68 50 72 C50 68 57 68 57 72 C57 78 50 83 50 83 C50 83 43 78 43 72 Z" fill="#e6397a" stroke="#ffffff" stroke-width="1.2"/>
+            </svg>
+          </div>
           <div>
             <h3>Nuestros monitos 🙈🙉🙊</h3>
             <p>Porque contigo cada videollamada, cada risa y cada ocurrencia es pura felicidad.</p>
@@ -1400,8 +1533,72 @@ canvas#conf {
     if(audio.paused) playMusic();
   });
 
-  /* 4. Sistema de Burbujas Interactivas con las frases exactas de Moisés */
-  var bubbleLayer = document.getElementById('bubble-layer');
+  /* 4. SVG de Snoopy, Burbuja y Monito Tierno en Movimiento */
+  var SNOOPY_SVG = '<svg viewBox="0 0 100 100" class="anim-snoopy" xmlns="http://www.w3.org/2000/svg">' +
+    '<circle cx="50" cy="52" r="42" fill="#fff0f5" stroke="#ff9ebb" stroke-width="2.5"/>' +
+    '<ellipse cx="47" cy="48" rx="21" ry="16" fill="#ffffff" stroke="#240710" stroke-width="2.8"/>' +
+    '<ellipse cx="63" cy="50" rx="12" ry="8.5" fill="#ffffff" stroke="#240710" stroke-width="2.8"/>' +
+    '<ellipse cx="32" cy="53" rx="7.5" ry="14" transform="rotate(14 32 53)" fill="#240710"/>' +
+    '<circle cx="74" cy="49" r="4.2" fill="#240710"/>' +
+    '<path d="M47 43 Q51 39 54 43" stroke="#240710" stroke-width="2.6" stroke-linecap="round" fill="none"/>' +
+    '<circle cx="43" cy="51" r="3.2" fill="#ff9ebb" opacity="0.65"/>' +
+    '<rect x="37" y="62" width="18" height="4.5" rx="2.2" fill="#e6397a" stroke="#240710" stroke-width="2"/>' +
+    '<path d="M38 66 L35 84 L57 84 L54 66 Z" fill="#ffffff" stroke="#240710" stroke-width="2.8"/>' +
+    '<path d="M72 22 C72 17 79 17 79 22 C79 17 86 17 86 22 C86 28 79 33 79 33 C79 33 72 28 72 22 Z" fill="#e6397a" style="animation:heartBeat 1.1s infinite;transform-origin:79px 25px"/>' +
+  '</svg>';
+
+  var BURBUJA_SVG = '<svg viewBox="0 0 100 100" class="anim-burbuja" xmlns="http://www.w3.org/2000/svg">' +
+    '<circle cx="50" cy="52" r="42" fill="#e3f6ff" stroke="#6ec6ff" stroke-width="2.5"/>' +
+    '<ellipse cx="18" cy="45" rx="10.5" ry="7.5" transform="rotate(-20 18 45)" fill="#ffd84d" stroke="#240710" stroke-width="2.6"/>' +
+    '<ellipse cx="82" cy="45" rx="10.5" ry="7.5" transform="rotate(20 82 45)" fill="#ffd84d" stroke="#240710" stroke-width="2.6"/>' +
+    '<circle cx="27" cy="45" r="3.2" fill="#4fc3f7" stroke="#240710" stroke-width="1.8"/>' +
+    '<circle cx="73" cy="45" r="3.2" fill="#4fc3f7" stroke="#240710" stroke-width="1.8"/>' +
+    '<path d="M38 66 L33 85 L67 85 L62 66 Z" fill="#4fc3f7" stroke="#240710" stroke-width="2.6"/>' +
+    '<rect x="35" y="73" width="30" height="4.8" fill="#240710"/>' +
+    '<circle cx="50" cy="49" r="21" fill="#ffe4d6" stroke="#240710" stroke-width="2.6"/>' +
+    '<path d="M29 44 C31 28 69 28 71 44 C63 37 55 42 50 35 C45 42 37 37 29 44 Z" fill="#ffd84d" stroke="#240710" stroke-width="2.4"/>' +
+    '<circle cx="41" cy="51" r="8" fill="#ffffff" stroke="#240710" stroke-width="2.2"/>' +
+    '<circle cx="59" cy="51" r="8" fill="#ffffff" stroke="#240710" stroke-width="2.2"/>' +
+    '<circle cx="42" cy="51" r="5.4" fill="#39b5ff"/>' +
+    '<circle cx="58" cy="51" r="5.4" fill="#39b5ff"/>' +
+    '<circle cx="42" cy="51" r="2.9" fill="#111111"/>' +
+    '<circle cx="58" cy="51" r="2.9" fill="#111111"/>' +
+    '<circle cx="40" cy="49" r="1.8" fill="#ffffff"/>' +
+    '<circle cx="56" cy="49" r="1.8" fill="#ffffff"/>' +
+    '<circle cx="33" cy="57" r="3" fill="#ff9ebb" opacity="0.65"/>' +
+    '<circle cx="67" cy="57" r="3" fill="#ff9ebb" opacity="0.65"/>' +
+    '<path d="M47 61 Q50 64 53 61" stroke="#240710" stroke-width="2.2" stroke-linecap="round" fill="none"/>' +
+  '</svg>';
+
+  var MONITO_SVG = '<svg viewBox="0 0 100 100" class="anim-monito" xmlns="http://www.w3.org/2000/svg">' +
+    '<circle cx="50" cy="52" r="42" fill="#fff5e6" stroke="#f4b183" stroke-width="2.5"/>' +
+    '<!-- Orejitas de Monito -->' +
+    '<circle cx="23" cy="48" r="10" fill="#8d5524" stroke="#240710" stroke-width="2.6"/>' +
+    '<circle cx="23" cy="48" r="5.5" fill="#ffcba4"/>' +
+    '<circle cx="77" cy="48" r="10" fill="#8d5524" stroke="#240710" stroke-width="2.6"/>' +
+    '<circle cx="77" cy="48" r="5.5" fill="#ffcba4"/>' +
+    '<!-- Cuerpo y cabecita -->' +
+    '<ellipse cx="50" cy="76" rx="15" ry="12" fill="#8d5524" stroke="#240710" stroke-width="2.6"/>' +
+    '<circle cx="50" cy="48" r="22" fill="#8d5524" stroke="#240710" stroke-width="2.6"/>' +
+    '<!-- Carita clara de monito -->' +
+    '<circle cx="43" cy="44" r="9" fill="#ffcba4"/>' +
+    '<circle cx="57" cy="44" r="9" fill="#ffcba4"/>' +
+    '<ellipse cx="50" cy="55" rx="15" ry="10.5" fill="#ffcba4"/>' +
+    '<!-- Ojitos tiernos brillantes -->' +
+    '<circle cx="42" cy="45" r="3.6" fill="#240710"/>' +
+    '<circle cx="58" cy="45" r="3.6" fill="#240710"/>' +
+    '<circle cx="41" cy="43.8" r="1.3" fill="#ffffff"/>' +
+    '<circle cx="57" cy="43.8" r="1.3" fill="#ffffff"/>' +
+    '<!-- Mejillas sonrojadas -->' +
+    '<ellipse cx="35" cy="53" rx="3.8" ry="2.2" fill="#ff7aa8" opacity="0.75"/>' +
+    '<ellipse cx="65" cy="53" rx="3.8" ry="2.2" fill="#ff7aa8" opacity="0.75"/>' +
+    '<!-- Naricita y sonrisa -->' +
+    '<ellipse cx="50" cy="51" rx="2.6" ry="1.8" fill="#4a2511"/>' +
+    '<path d="M44 56 Q50 62 56 56" stroke="#240710" stroke-width="2.4" stroke-linecap="round" fill="none"/>' +
+    '<!-- Corazón en las manitos del monito -->' +
+    '<path d="M43 72 C43 68 50 68 50 72 C50 68 57 68 57 72 C57 78 50 83 50 83 C50 83 43 78 43 72 Z" fill="#e6397a" stroke="#ffffff" stroke-width="1.2" style="animation:heartBeat 1s infinite;transform-origin:50px 75px"/>' +
+  '</svg>';
+
   var secretWords = [
     'Mi chica hermosa 💖',
     'Mi eternidad ♾️',
@@ -1416,31 +1613,95 @@ canvas#conf {
     '¡Pronto en Cuzco! ✈️🏔️'
   ];
   var wordIndex = 0;
-  var bubbleIcons = ['🫧', '💖', '🐶', '🐵', '✨', '👑', '🙈'];
+
+  function showFloatingLoveWord(x, y){
+    var msg = document.createElement('div');
+    msg.className = 'bubble-pop-msg';
+    msg.style.left = Math.min(Math.max(x, 110), window.innerWidth - 110) + 'px';
+    msg.style.top = Math.max(y, 60) + 'px';
+    msg.textContent = secretWords[wordIndex % secretWords.length];
+    wordIndex++;
+    document.body.appendChild(msg);
+    setTimeout(function(){ msg.remove(); }, 1350);
+  }
+
+  /* Inyectar a Snoopy, Burbuja y Monito en movimiento en TODAS las diapositivas */
+  var mascotSVGs = [SNOOPY_SVG, BURBUJA_SVG, MONITO_SVG];
+  slides.forEach(function(slideEl, idx){
+    /* 1. Esquina superior e inferior con personajes flotando */
+    var m1 = document.createElement('div');
+    m1.className = 'slide-mascot-badge ' + (idx % 2 === 0 ? 'pos-tr' : 'pos-tl');
+    m1.innerHTML = mascotSVGs[idx % 3];
+    m1.title = '¡Tócame!';
+    m1.addEventListener('click', function(e){
+      e.stopPropagation();
+      var r = m1.getBoundingClientRect();
+      showFloatingLoveWord(r.left + r.width / 2, r.top);
+    });
+    slideEl.appendChild(m1);
+
+    var m2 = document.createElement('div');
+    m2.className = 'slide-mascot-badge ' + (idx % 2 === 0 ? 'pos-bl' : 'pos-br');
+    m2.innerHTML = mascotSVGs[(idx + 1) % 3];
+    m2.title = '¡Tócame!';
+    m2.addEventListener('click', function(e){
+      e.stopPropagation();
+      var r = m2.getBoundingClientRect();
+      showFloatingLoveWord(r.left + r.width / 2, r.top);
+    });
+    slideEl.appendChild(m2);
+
+    /* 2. Reemplazar el indicador superior derecho de cada slide por el trío animado en miniatura */
+    var numRow = slideEl.querySelector('.num-row');
+    if(numRow && numRow.children.length > 1){
+      var trio = document.createElement('div');
+      trio.className = 'trio-mascots-bar';
+      trio.innerHTML = SNOOPY_SVG + BURBUJA_SVG + MONITO_SVG;
+      trio.addEventListener('click', function(e){
+        e.stopPropagation();
+        var r = trio.getBoundingClientRect();
+        showFloatingLoveWord(r.left + r.width / 2, r.top + 10);
+        window.launchBubbleBurst();
+      });
+      numRow.replaceChild(trio, numRow.children[1]);
+    }
+  });
+
+  /* Sistema de Burbujas Interactivas que llevan a Snoopy, Burbuja y Monito adentro */
+  var bubbleLayer = document.getElementById('bubble-layer');
+  var bubbleContents = [
+    SNOOPY_SVG,
+    BURBUJA_SVG,
+    MONITO_SVG,
+    '🫧',
+    '💖',
+    '👑',
+    '♾️'
+  ];
+  var bIdx = 0;
 
   function spawnBubble(){
     if(document.hidden) return;
     var b = document.createElement('div');
     b.className = 'bubble';
-    var size = 36 + Math.random() * 28;
+    var size = 42 + Math.random() * 26;
     b.style.width = size + 'px';
     b.style.height = size + 'px';
     b.style.left = (4 + Math.random() * 86) + 'vw';
     var dur = 9 + Math.random() * 7;
     b.style.animationDuration = dur + 's';
-    b.textContent = bubbleIcons[Math.floor(Math.random() * bubbleIcons.length)];
+    var content = bubbleContents[bIdx % bubbleContents.length];
+    bIdx++;
+    if(content.indexOf('<svg') === 0){
+      b.innerHTML = '<div style="width:76%;height:76%;pointer-events:none">' + content + '</div>';
+    } else {
+      b.textContent = content;
+    }
 
     b.addEventListener('click', function(e){
       e.stopPropagation();
       var rect = b.getBoundingClientRect();
-      var msg = document.createElement('div');
-      msg.className = 'bubble-pop-msg';
-      msg.style.left = Math.min(Math.max(rect.left + rect.width / 2, 110), window.innerWidth - 110) + 'px';
-      msg.style.top = (rect.top + rect.height / 2) + 'px';
-      msg.textContent = secretWords[wordIndex % secretWords.length];
-      wordIndex++;
-      document.body.appendChild(msg);
-      setTimeout(function(){ msg.remove(); }, 1350);
+      showFloatingLoveWord(rect.left + rect.width / 2, rect.top + rect.height / 2);
       b.remove();
     });
 
@@ -1450,8 +1711,8 @@ canvas#conf {
     }, dur * 1000);
   }
 
-  setInterval(spawnBubble, 2100);
-  for(var k = 0; k < 5; k++) setTimeout(spawnBubble, k * 450);
+  setInterval(spawnBubble, 1900);
+  for(var k = 0; k < 6; k++) setTimeout(spawnBubble, k * 400);
 
   /* 5. Función para hacer saltar un corazón al tocar cualquier foto */
   window.triggerPhotoHeart = function(phEl){
